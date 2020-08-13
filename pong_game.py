@@ -1,7 +1,7 @@
 """
    Version of classic pong game with simple program (no OOP).
 """
-
+import os
 import turtle
 
 # Create interface window
@@ -9,8 +9,13 @@ win = turtle.Screen()
 win.title('Version of Pong')
 win.bgcolor('grey')
 win.setup(width = 800, height = 600)
-# Use tracer to stop windom from automatically updating
+
+# Use tracer to stop window from automatically updating
 win.tracer(0)
+
+# Initialize scoring variables
+score_a = 0
+score_b = 0
 
 # First_paddle : left paddle
 first_paddle = turtle.Turtle()
@@ -42,8 +47,8 @@ ball.shape('circle')
 ball.color('red')
 ball.penup() # So it doesn't draw trailing line
 ball.goto(0, 0) # start location
-ball.dx = 9 # dx meaning change in x
-ball.dy = 9 # dy meaning change in y
+ball.dx = 4 # dx meaning change in x
+ball.dy = 4 # dy meaning change in y
 
 # Pen to show scoring
 pen = turtle.Turtle()
@@ -55,24 +60,25 @@ pen.goto(0,260)
 pen.write('Player A: 0   Player B: 0', align='center', font=('Courier', 20))
 
 # Functions to move objects
+# Used small steps of 5 pixels for smoother AI
 def first_paddle_up():
     y = first_paddle.ycor() 
-    y += 20
+    y += 5
     first_paddle.sety(y)
 
 def first_paddle_down():
     y = first_paddle.ycor() 
-    y -= 20
+    y -= 5
     first_paddle.sety(y)
 
 def second_paddle_up():
     y = second_paddle.ycor() 
-    y += 20
+    y += 15
     second_paddle.sety(y)
 
 def second_paddle_down():
     y = second_paddle.ycor() 
-    y -= 20
+    y -= 15
     second_paddle.sety(y)
 
 # Keyboard binding : arrows Up, Down
@@ -97,15 +103,26 @@ while True:
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy *= -1 # should reverse direction of ball
+
     if ball.ycor() < -280:
         ball.sety(-280)
         ball.dy *= -1 # should reverse direction of ball
+
     if ball.xcor() > 380:
         ball.setx(380)
         ball.dx *= -1 # should reverse direction of ball
+        score_a += 1 # score_A gets a point
+        pen.clear() # must clear screen, otherwise it will write over itself
+        pen.write('Player A: {}   Player B: {}'.format(score_a, score_b), \
+            align='center', font=('Courier', 20))
+
     if ball.xcor() < -390:
         ball.setx(-390)
         ball.dx *= -1 # should reverse direction of ball
+        score_b += 1 # score_B gets a point
+        pen.clear() # must clear screen, otherwise it will write over itself
+        pen.write('Player A: {}   Player B: {}'.format(score_a, score_b), \
+            align='center', font=('Courier', 20))
 
     # Paddle and ball collisions
     if (ball.xcor() < -340 and ball.xcor() > -350) and \
@@ -131,8 +148,6 @@ while True:
         #ball.goto(0,0)
         ball.dx *= -1
 
-
-
     # Keep paddles in screen area via wraparound
     if first_paddle.ycor() > 300:
         first_paddle.sety(-300)
@@ -144,13 +159,10 @@ while True:
     if second_paddle.ycor() < -300:
         second_paddle.sety(300)
 
+    # AI Player
+    if first_paddle.ycor() < ball.ycor(): # and abs(first_paddle.ycor() - ball.ycor()) > 5: 
+        first_paddle_up()
+    elif first_paddle.ycor() > ball.ycor(): # and abs(first_paddle.ycor() - ball.ycor()) > 5: 
+        first_paddle_down() 
     
 
-
-
-    # if (ball.xcor() > 340 and ball.xcor() < 350) and \
-    #     (ball.ycor() < second_paddle.ycor() + 40) \
-    #     and (ball.ycor() > second_paddle.ycor() -40):
-    #     ball.goto(0,0)
-    #     #ball.setx(340)
-    #     ball.dx *= -1
