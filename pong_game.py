@@ -4,6 +4,11 @@
 import os
 import turtle
 
+# TODO: offer user choices, play computer
+# 2 player, how difficult, how fast
+#  decrease the paddle as lose - how to work with 2 player
+# add sounds
+
 # Create interface window
 win = turtle.Screen()
 win.title('Version of Pong')
@@ -89,7 +94,7 @@ win.onkeypress(first_paddle_up, 'u')
 win.onkeypress(second_paddle_down, 'Down')
 win.onkeypress(second_paddle_up, 'Up')
 
-# Game loop
+# Game loop 
 while True:
     # Updates every time
     win.update()
