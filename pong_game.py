@@ -108,10 +108,12 @@ while True:
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy *= -1 # should reverse direction of ball
+        os.system('afplay tom.wav&') # & to stop delay
 
     if ball.ycor() < -280:
         ball.sety(-280)
         ball.dy *= -1 # should reverse direction of ball
+        os.system('afplay tom.wav&') # & to stop delay
 
     if ball.xcor() > 380:
         ball.setx(380)
@@ -120,6 +122,7 @@ while True:
         pen.clear() # must clear screen, otherwise it will write over itself
         pen.write('Player A: {}   Player B: {}'.format(score_a, score_b), \
             align='center', font=('Courier', 20))
+        os.system('afplay tom.wav&') # & to stop delay
 
     if ball.xcor() < -390:
         ball.setx(-390)
@@ -128,18 +131,22 @@ while True:
         pen.clear() # must clear screen, otherwise it will write over itself
         pen.write('Player A: {}   Player B: {}'.format(score_a, score_b), \
             align='center', font=('Courier', 20))
+        os.system('afplay tom.wav&') # & to stop delay
 
     # Paddle and ball collisions
     if (ball.xcor() < -340 and ball.xcor() > -350) and \
         (ball.ycor() < first_paddle.ycor() + 50) and \
         (ball.ycor() > first_paddle.ycor() - 50):
         ball.setx(-340)
-        ball.dx *= -1
+        ball.dx *= -1                  
+        os.system('afplay hat.wav&') # & to stop delay
+
     if (ball.xcor() > 340 and ball.xcor() < 350) and \
         (ball.ycor() < second_paddle.ycor() + 50) and \
         (ball.ycor() > second_paddle.ycor() - 50):
         ball.setx(340)
         ball.dx *= -1
+        os.system('afplay hat.wav&') # & to stop delay
 
     # Reset if ball trapped between paddle and wall
     if (ball.xcor() < -355 and ball.xcor() > -400) and \
@@ -147,11 +154,13 @@ while True:
         (ball.ycor() > first_paddle.ycor() - 50):
         #ball.goto(0,0)
         ball.dx *= -1
+        os.system('afplay hat.wav&') # & to stop delay
     if (ball.xcor() > 355 and ball.xcor() < 400) and \
         (ball.ycor() < second_paddle.ycor() + 50) and \
         (ball.ycor() > second_paddle.ycor() - 50):
         #ball.goto(0,0)
         ball.dx *= -1
+        os.system('afplay hat.wav&') # & to stop delay
 
     # Keep paddles in screen area via wraparound
     if first_paddle.ycor() > 300:
