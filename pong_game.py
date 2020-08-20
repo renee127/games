@@ -1,5 +1,6 @@
 """
    Version of classic pong game with simple program (no OOP).
+   Credit to TokyoEdTech Youtube instruction for bulk of prgm.
 """
 import os
 import turtle
